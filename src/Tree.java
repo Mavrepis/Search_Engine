@@ -20,16 +20,13 @@ import java.util.Stack;
         // A utility function to check if 'c'
         // is an operator
 
-        boolean isOperator(String  c) {
-            if (c .equals("&") || c .equals("|")
-                    || c .equals("~"))  {
-                return true;
-            }
-            return false;
+        private boolean isOperator(String c) {
+            return c.equals("&") || c.equals("|")
+                    || c.equals("~");
         }
 
         // Utility function to do inorder traversal
-        void inorder(Node t) {
+        private void inorder(Node t) {
             if (t != null) {
                 inorder(t.left);
                 System.out.print(t.value + " ");
@@ -37,7 +34,7 @@ import java.util.Stack;
             }
         }
         // Utility function to do postorder traversal
-        void postorder(Node t){
+        private void postorder(Node t){
             if (t != null) {
                 postorder(t.right);
                 System.out.print(t.value + " ");
@@ -55,7 +52,7 @@ import java.util.Stack;
                 if(temp_node.left !=null){
                     queue.add(temp_node.left);
                 }
-                else if(temp_node.right !=null){
+                if(temp_node.right !=null){
                     queue.add(temp_node.right);
                 }
 

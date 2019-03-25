@@ -1,9 +1,8 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 class Dictionary implements java.io.Serializable{
 ;
-    HashMap<String, ArrayList<Integer>> dict;
+    private HashMap<String, ArrayList<Integer>> dict;
     private static final long serialVersionUID = 0x1b32faab5902bfa3L;
     Dictionary(){
         dict = new HashMap<>();
