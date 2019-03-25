@@ -3,7 +3,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import java.util.Stack;
 
 class Parser {
 
@@ -21,7 +20,7 @@ class Parser {
         return tokenize(builder.toString());
     }
 
-    public static ArrayList tokenize(String text){
+    static ArrayList tokenize(String text){
         StringTokenizer st = new StringTokenizer(text," .!?,\t\n;()[]{}-\"123456789'/0ό");
         String Token;
         ArrayList<String> token_list = new ArrayList<>();
