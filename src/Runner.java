@@ -45,7 +45,7 @@ public class Runner {
             }
 
         } else {
-            try (Stream<Path> walk = Files.walk(Paths.get("C:\\Users\\phili\\IntelliJProjects\\Search_Engine\\data"))) {
+            try (Stream<Path> walk = Files.walk(Paths.get("C:\\Users\\Philip\\Documents\\IntelliJProjects\\Search_Engine\\data"))) {
 
                 List<String> result = walk.map(Path::toString)
                         .filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
@@ -83,7 +83,7 @@ public class Runner {
             }
         }
         Queries q = new Queries(map);
-//            dict.print();
+//        dict.print();
 //        //Get word's list of appearances.
 //        System.out.println(dict.get("response"));
 //
@@ -110,12 +110,10 @@ public class Runner {
 //        );
 //
 //        System.out.println(q.n_word_and(list_first_word,list_second_word,list_third_word,list_fourth_word));
+        ExpressionParser et = new ExpressionParser();
+        String query = "travel world ~ & output quota & |";
+        System.out.println(et.evaluate_query(query,dict));
         final long endTime = System.currentTimeMillis();
-        ExpressionTree et = new ExpressionTree();
-        String query = "travel world & potato blaster & |";
-
-        Node root = et.constructTree(query);
-        et.orderlevel(root);
         System.out.println("Total execution time: " + (endTime - startTime)*0.001 +" seconds");
     }
 

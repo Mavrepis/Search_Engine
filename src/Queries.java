@@ -1,14 +1,14 @@
 import java.util.*;
 
 class Queries {
-    Set<Integer> doc_ID = new HashSet<>();
-    public Queries(MapDocId2Files map){
+    private static Set<Integer> doc_ID = new HashSet<>();
+    Queries(MapDocId2Files map){
         for (int i=0; i<map.length(); i++){
             doc_ID.add(i);
         }
     }
 
-    ArrayList<Integer> two_word_and(ArrayList<Integer> word1, ArrayList<Integer> word2) {
+    static ArrayList<Integer> two_word_and(ArrayList<Integer> word1, ArrayList<Integer> word2) {
 
         ArrayList<Integer> answer = new ArrayList<>();
 
@@ -16,7 +16,6 @@ class Queries {
         ListIterator<Integer> word2_iter = word2.listIterator();
 
         while (word1_iter.hasNext() && word2_iter.hasNext()) {
-
             int current_docId1 = word1.get(word1_iter.nextIndex());
             int current_docId2 = word2.get(word2_iter.nextIndex());
 
@@ -67,7 +66,7 @@ class Queries {
     }
 
     @SafeVarargs
-    final ArrayList<Integer> or(ArrayList<Integer>... words){
+    static ArrayList<Integer> or(ArrayList<Integer>... words){
         Set<Integer> answer = new HashSet<>();
         for(ArrayList<Integer> word:words){
             answer.addAll(word);
@@ -75,7 +74,7 @@ class Queries {
         return new ArrayList<>(answer);
     }
 
-    ArrayList<Integer> negate(ArrayList<Integer> word){
+    static ArrayList<Integer> negate(ArrayList<Integer> word){
         Set<Integer> answer = new HashSet<>(doc_ID);
         answer.removeAll(word);
         return new ArrayList<>(answer);
