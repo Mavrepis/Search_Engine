@@ -91,24 +91,23 @@ public class Runner {
 //        ArrayList<Integer> list_second_word = dict.get("already");
 //        ArrayList<Integer> list_third_word = dict.get("year");
 //        ArrayList<Integer> list_fourth_word = dict.get("response");
-
+//
 //        // Get a list of common appearances of two words.
-//        System.out.println(q.two_word_and(list_first_word, list_second_word));
+//        System.out.println(Queries.intersect(list_first_word, list_second_word));
 //
 //        //Get a list of common appearances of three words.
 //        System.out.println(q.three_word_and(list_first_word, list_second_word,list_third_word));
 //
 //        //Get a list of union of two words.
-//        System.out.println(q.or(list_first_word,list_second_word));
+//        System.out.println(Queries.or(list_first_word,list_second_word));
 //
-        //Negation of a word
-//        System.out.println(q.negate(list_first_word));
+//        //Negation of a word
+//        System.out.println(Queries.negate(list_first_word));
 //
 //        //Complex query (A^B) V (C ^ D)
 //        System.out.println(
-//                q.or(q.two_word_and(list_first_word,list_second_word),q.two_word_and(list_second_word,list_third_word))
+//                Queries.or(Queries.intersect(list_first_word,list_second_word),Queries.intersect(list_second_word,list_third_word))
 //        );
-//
 //        System.out.println(q.n_word_and(list_first_word,list_second_word,list_third_word,list_fourth_word));
         ExpressionParser et = new ExpressionParser();
         String query = "travel world ~ & output quota & |";
