@@ -8,7 +8,7 @@ class Queries {
         }
     }
 
-    static ArrayList<Integer> two_word_and(ArrayList<Integer> word1, ArrayList<Integer> word2) {
+    static ArrayList<Integer> intersect(ArrayList<Integer> word1, ArrayList<Integer> word2) {
 
         ArrayList<Integer> answer = new ArrayList<>();
 
@@ -40,17 +40,17 @@ class Queries {
         int b = word2.size();
         int c = word3.size();
         if (a == Math.min(Math.min(a, b), c) && (b == Math.min(b, c))) // a is min, b smaller than c
-            answer = two_word_and(two_word_and(word1, word2), word3);
+            answer = intersect(intersect(word1, word2), word3);
         else if (a == Math.min(Math.min(a, b), c) && (c == Math.min(b, c))) //a is min, c smaller than b
-            answer = two_word_and(two_word_and(word1, word3), word2);
+            answer = intersect(intersect(word1, word3), word2);
         else if (b == Math.min(Math.min(a, b), c) && (a == Math.min(a, c))) //b is min, a smaller than c
-            answer = two_word_and(two_word_and(word2, word1), word3);
+            answer = intersect(intersect(word2, word1), word3);
         else if (b == Math.min(Math.min(a, b), c) && (c == Math.min(a, c))) //b is min, c smaller than a
-            answer = two_word_and(two_word_and(word2, word3), word1);
+            answer = intersect(intersect(word2, word3), word1);
         else if (c == Math.min(Math.min(a, b), c) && (a == Math.min(a, b))) //c is min, a smaller than b
-            answer = two_word_and(two_word_and(word3, word1), word2);
+            answer = intersect(intersect(word3, word1), word2);
         else if (c == Math.min(Math.min(a, b), c) && (b == Math.min(a, b))) //c is min, b smaller than a
-            answer = two_word_and(two_word_and(word3, word2), word1);
+            answer = intersect(intersect(word3, word2), word1);
         return answer;
     }
 
