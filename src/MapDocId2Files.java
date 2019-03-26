@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MapDocId2Files implements Serializable {
 
@@ -17,5 +18,11 @@ public class MapDocId2Files implements Serializable {
 
     public int length(){
         return map.length;
+    }
+
+    public void print(ArrayList<Integer> docs){
+        for (int docId : docs){
+            System.out.println(get(docId));
+        }
     }
 }
