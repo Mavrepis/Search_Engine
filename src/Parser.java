@@ -31,42 +31,58 @@ class Parser {
     }
 
     static String infix_to_Postfix(String infix){
+
+        // Hash Map for operator precedence
         HashMap<String,Integer> precedence = new HashMap<>();
         precedence.put("~",3);
         precedence.put("&",2);
         precedence.put("|",1);
         precedence.put("(",0);
 
+        // Keep an operator's stack
         Stack<String> opStack = new Stack<>();
+        // List for the final postfix notation
         List<String> postfixList = new ArrayList<>();
+        //Tokens of infix string notation
         List<String> tokenList;
         tokenList = tokenize(infix);
+        // Top of stack for precedence comparison
         String top;
 
         for (String token: tokenList){
+            // Using first character of token ( to save some lines )
             if (Character.isLetterOrDigit(token.charAt(0))){
                 postfixList.add(token);
             }
+            //Add to stack to keep track of operators
             else if(token.equals("(")){
                 opStack.push(token);
             }
             else if(token.equals(")")){
                 top = opStack.pop();
-                while (top.equals("(")){
+                // Pop operators from stack until the corresponding parenthesis
+                while (!top.equals("(")){
+                    //Add to postfix string
                     postfixList.add(top);
                     top = opStack.pop();
                 }
             }
+            // Token is operator
             else{
+                // While precedence of  Operator's stack top element is bigger than token's
                 while(!opStack.isEmpty() && (precedence.get(opStack.peek()) >= precedence.get(token) ) ) {
+                    //Add top to postfix string
                     postfixList.add(opStack.pop());
                 }
+                //Add token (  operator ) to stack
                 opStack.push(token);
             }
         }
         while(!opStack.isEmpty()){
+            //Add remaining stack elements to postfix
             postfixList.add(opStack.pop());
         }
+        //Add spaces between each element of postfixList
         return String.join(" ",postfixList);
     }
 
