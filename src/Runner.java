@@ -118,7 +118,7 @@ public class Runner {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
             String query = br.readLine().toLowerCase();
-            System.out.println(et.evaluate_query(Parser.infix_to_Postfix(query),dict));
+            map.print(et.evaluate_query(Parser.infix_to_Postfix(query),dict));
         } catch (IOException e) {
             e.printStackTrace();
         }
