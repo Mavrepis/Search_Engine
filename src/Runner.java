@@ -117,7 +117,7 @@ public class Runner {
         System.out.println("Please enter your query like this: ( A & ~B ) | ( C & D )");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-            String query = br.readLine();
+            String query = br.readLine().toLowerCase();
             System.out.println(et.evaluate_query(Parser.infix_to_Postfix(query),dict));
         } catch (IOException e) {
             e.printStackTrace();
