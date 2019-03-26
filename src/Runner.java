@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 
 public class Runner {
 
@@ -45,7 +48,7 @@ public class Runner {
             }
 
         } else {
-            try (Stream<Path> walk = Files.walk(Paths.get("C:\\Users\\Philip\\Documents\\IntelliJProjects\\Search_Engine\\data"))) {
+            try (Stream<Path> walk = Files.walk(Paths.get("C:\\Users\\phili\\IntelliJProjects\\Search_Engine\\data"))) {
 
                 List<String> result = walk.map(Path::toString)
                         .filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
@@ -109,10 +112,16 @@ public class Runner {
 //                Queries.or(Queries.intersect(list_first_word,list_second_word),Queries.intersect(list_second_word,list_third_word))
 //        );
 //        System.out.println(q.n_word_and(list_first_word,list_second_word,list_third_word,list_fourth_word));
-        ExpressionParser et = new ExpressionParser();
-        String query = "travel world ~ & output quota & |";
-        System.out.println(et.evaluate_query(query,dict));
         final long endTime = System.currentTimeMillis();
+        ExpressionParser et = new ExpressionParser();
+        System.out.println("Please enter your query like this: ( A & ~B ) | ( C & D )");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String query = br.readLine();
+            System.out.println(et.evaluate_query(Parser.infix_to_Postfix(query),dict));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Total execution time: " + (endTime - startTime)*0.001 +" seconds");
     }
 
