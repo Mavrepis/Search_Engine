@@ -34,6 +34,11 @@ class Dictionary implements java.io.Serializable{
         }
     }
 
-    public ArrayList<Integer> get(String word){ return dict.get(word); }
+    public ArrayList<Integer> get(String word){
+        if( dict.get(word) != null){
+            return dict.get(word);
+        }
+        else return new ArrayList<>();
+    }
 
 }
