@@ -48,7 +48,7 @@ public class Runner {
             }
 
         } else {
-            try (Stream<Path> walk = Files.walk(Paths.get("C:\\Users\\phili\\IntelliJProjects\\Search_Engine\\data"))) {
+            try (Stream<Path> walk = Files.walk(Paths.get("../data"))) {
 
                 List<String> result = walk.map(Path::toString)
                         .filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
