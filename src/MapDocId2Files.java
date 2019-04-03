@@ -20,9 +20,12 @@ public class MapDocId2Files implements Serializable {
         return map.length;
     }
 
-    public void print(ArrayList<Integer> docs){
-        for (int docId : docs){
-            System.out.println(get(docId));
+    void print(ArrayList<Integer> docs){
+        if (!docs.isEmpty()) {
+            for (int docId : docs) {
+                System.out.println(get(docId));
+            }
         }
+        else System.out.println("No results");
     }
 }
