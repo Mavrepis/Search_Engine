@@ -3,9 +3,9 @@ import java.util.ArrayList;
 
 public class MapDocId2Files implements Serializable {
 
-    String [] map =null;
+    private String [] map;
     private static final long serialVersionUID = 0x1b32faab5902bfa0L;
-    public MapDocId2Files(int size) {
+    MapDocId2Files(int size) {
         map = new String[size];
     }
 
