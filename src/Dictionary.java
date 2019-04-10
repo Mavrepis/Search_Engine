@@ -2,39 +2,49 @@ import java.util.*;
 
 class Dictionary implements java.io.Serializable{
 ;
-    private HashMap<String, ArrayList<Integer>> dict;
+    private HashMap<String, ArrayList<Posting>> dict;
     private static final long serialVersionUID = 0x1b32faab5902bfa3L;
-    Dictionary(){
+
+    Dictionary() {
         dict = new HashMap<>();
     }
 
-    void insert(String word, int docID){
+    void insert(String word, int docID, float term_freq){
+        Posting post = new Posting(docID,term_freq);
         if(dict.containsKey(word)){
-            if(!(dict.get(word).contains((docID)))){
-                dict.get(word).add(docID);
+            ArrayList<Posting> posting_list = dict.get(word);
+            boolean exist = false;
+            for(Posting post_cell: posting_list){
+                if(post_cell.getDocId()==docID){
+                    exist=true;
+                }
+            }
+            if(!exist){
+                dict.get(word).add(post);
             }
         }
         else{
-            ArrayList<Integer> docId_list = new ArrayList<>();
-            docId_list.add(docID);
-            dict.put(word,docId_list);
+            ArrayList<Posting> Posting_list = new ArrayList<>();
+            Posting_list.add(post);
+            dict.put(word,Posting_list);
         }
     }
+
     void print(){
         if (dict==null)
             return;
         Set<String> s = dict.keySet();
         for (String word : s) {
-            ArrayList<Integer> a = dict.get(word);
+            ArrayList<Posting> a = dict.get(word);
             System.out.print(word + "->");
-            for (Integer integer : a) {
-                System.out.print(integer + " ");
+            for (Posting value : a) {
+                System.out.print(value.getDocId() + " " + value.getScore() + ", ");
             }
             System.out.println();
         }
     }
 
-    public ArrayList<Integer> get(String word){
+    public ArrayList<Posting> get(String word){
         if( dict.get(word) != null){
             return dict.get(word);
         }
