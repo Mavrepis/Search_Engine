@@ -8,60 +8,54 @@ class Queries {
         }
     }
 
-    static ArrayList<Integer> intersect(ArrayList<Integer> word1, ArrayList<Integer> word2) {
+    static ArrayList<Integer> intersect_postings(ArrayList<Posting> word1, ArrayList<Posting> word2) {
         ArrayList<Integer> answer = new ArrayList<>();
-            ListIterator<Integer> word1_iter = word1.listIterator();
-            ListIterator<Integer> word2_iter = word2.listIterator();
+        ArrayList<Integer> word1_docID = new ArrayList<>();
+        ArrayList<Integer> word2_docID = new ArrayList<>();
+        for(Posting cell: word1){
+            word1_docID.add(cell.getDocId());
+        }
+        for(Posting cell: word2){
+            word2_docID.add(cell.getDocId());
+        }
+        return getIntegers(word1_docID, word2_docID, answer);
+    }
+    static ArrayList<Integer> intersect_integers(ArrayList<Integer> word1, ArrayList<Integer> word2) {
+        ArrayList<Integer> answer = new ArrayList<>();
+        return getIntegers(word1, word2, answer);
+    }
 
-            while (word1_iter.hasNext() && word2_iter.hasNext()) {
-                int current_docId1 = word1.get(word1_iter.nextIndex());
-                int current_docId2 = word2.get(word2_iter.nextIndex());
+    private static ArrayList<Integer> getIntegers(ArrayList<Integer> word1, ArrayList<Integer> word2, ArrayList<Integer> answer) {
+        ListIterator<Integer> word1_iter = word1.listIterator();
+        ListIterator<Integer> word2_iter = word2.listIterator();
 
-                if (current_docId1 == current_docId2) {
-                    answer.add(word1_iter.next());
-                    word2_iter.next();
-                } else if (current_docId1 < current_docId2) {
-                    word1_iter.next();
-                } else {
-                    word2_iter.next();
-                }
+        while (word1_iter.hasNext() && word2_iter.hasNext()) {
+            int current_docId1 = word1.get(word1_iter.nextIndex());
+            int current_docId2 = word2.get(word2_iter.nextIndex());
+
+            if (current_docId1 == current_docId2) {
+                answer.add(word1_iter.next());
+                word2_iter.next();
+            } else if (current_docId1 < current_docId2) {
+                word1_iter.next();
+            } else {
+                word2_iter.next();
             }
+        }
         return answer;
     }
 
-//    ArrayList<Integer> three_word_and(ArrayList<Integer> word1, ArrayList<Integer> word2, ArrayList<Integer> word3) {
-//        ArrayList<Integer> answer = new ArrayList<>();
-//        int a = word1.size();
-//        int b = word2.size();
-//        int c = word3.size();
-//        if (a == Math.min(Math.min(a, b), c) && (b == Math.min(b, c))) // a is min, b smaller than c
-//            answer = intersect(intersect(word1, word2), word3);
-//        else if (a == Math.min(Math.min(a, b), c) && (c == Math.min(b, c))) //a is min, c smaller than b
-//            answer = intersect(intersect(word1, word3), word2);
-//        else if (b == Math.min(Math.min(a, b), c) && (a == Math.min(a, c))) //b is min, a smaller than c
-//            answer = intersect(intersect(word2, word1), word3);
-//        else if (b == Math.min(Math.min(a, b), c) && (c == Math.min(a, c))) //b is min, c smaller than a
-//            answer = intersect(intersect(word2, word3), word1);
-//        else if (c == Math.min(Math.min(a, b), c) && (a == Math.min(a, b))) //c is min, a smaller than b
-//            answer = intersect(intersect(word3, word1), word2);
-//        else if (c == Math.min(Math.min(a, b), c) && (b == Math.min(a, b))) //c is min, b smaller than a
-//            answer = intersect(intersect(word3, word2), word1);
-//        return answer;
-//    }
-//
-//    @SafeVarargs
-//    final ArrayList<Integer> n_word_and( ArrayList<Integer>... words){
-//        List<ArrayList<Integer>> word_list = new ArrayList<>(Arrays.asList(words));
-//        Set<Integer> answer = new HashSet<>(doc_ID);
-//        word_list.sort(Comparator.comparingInt(ArrayList::size));
-//        for(ArrayList<Integer> word : word_list ){
-//            answer.removeAll(negate(word));
+    @SafeVarargs
+//    static ArrayList<Integer> or_posting(ArrayList<Posting>... words){
+//        Set<Integer> answer = new HashSet<>();
+//        for(ArrayList<Posting> postings :words){
+//            for(Posting posting: postings){
+//                answer.add(posting.getDocId());
+//            }
 //        }
 //        return new ArrayList<>(answer);
 //    }
-
-    @SafeVarargs
-    static ArrayList<Integer> or(ArrayList<Integer>... words){
+    static ArrayList<Integer> or_integer(ArrayList<Integer>... words){
         Set<Integer> answer = new HashSet<>();
         for(ArrayList<Integer> word:words){
             answer.addAll(word);
@@ -69,7 +63,14 @@ class Queries {
         return new ArrayList<>(answer);
     }
 
-    static ArrayList<Integer> negate(ArrayList<Integer> word){
+//    static ArrayList<Integer> negate_posting(ArrayList<Posting> word){
+//        Set<Integer> answer = new HashSet<>(doc_ID);
+//        for(Posting posting:word){
+//            answer.remove(posting.getDocId());
+//        }
+//        return new ArrayList<>(answer);
+//    }
+    static ArrayList<Integer> negate_integer(ArrayList<Integer> word){
         Set<Integer> answer = new HashSet<>(doc_ID);
         answer.removeAll(word);
         return new ArrayList<>(answer);
