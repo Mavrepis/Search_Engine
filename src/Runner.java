@@ -65,7 +65,6 @@ public class Runner {
                     map.add(result.indexOf(path),path);
                     HashMap<String,Integer> term_frequencies = new HashMap<>();
                     for (Object word : words) {
-                        //noinspection SuspiciousMethodCalls
                         if(!term_frequencies.containsKey(word)){
                             term_frequencies.put(word.toString(),1);
                             if(df.containsKey(word.toString())){
@@ -116,25 +115,24 @@ public class Runner {
                 ioe.printStackTrace();
             }
         }
-//        Queries q = new Queries(map);
         dict.print();
-//        //Get word's list of appearances.
+        //Get word's list of appearances.
 //        System.out.println(dict.get("response"));
-//
-//        ArrayList<Integer> list_first_word = dict.get("all");
-//        ArrayList<Integer> list_second_word = dict.get("already");
-//        ArrayList<Integer> list_third_word = dict.get("year");
-//        ArrayList<Integer> list_fourth_word = dict.get("response");
+
+//        ArrayList<Posting> list_first_word = dict.get("world");
+//        ArrayList<Posting> list_second_word = dict.get("quota");
+//        ArrayList<Posting> list_third_word = dict.get("year");
+//        ArrayList<Posting> list_fourth_word = dict.get("response");
 //
 //        // Get a list of common appearances of two words.
-//        System.out.println(Queries.intersect(list_first_word, list_second_word));
-//
+//        map.print(Queries.intersect_postings(list_first_word, list_second_word));
+
 //        //Get a list of common appearances of three words.
 //        System.out.println(q.three_word_and(list_first_word, list_second_word,list_third_word));
 //
-//        //Get a list of union of two words.
-//        System.out.println(Queries.or(list_first_word,list_second_word));
-//
+        //Get a list of union of two words.
+//        map.print(Queries.or(list_first_word,list_second_word));
+
 //        //Negation of a word
 //        System.out.println(Queries.negate(list_first_word));
 //
@@ -143,17 +141,17 @@ public class Runner {
 //                Queries.or(Queries.intersect(list_first_word,list_second_word),Queries.intersect(list_second_word,list_third_word))
 //        );
 //        System.out.println(q.n_word_and(list_first_word,list_second_word,list_third_word,list_fourth_word));
-//        final long endTime = System.currentTimeMillis();
-//        ExpressionParser et = new ExpressionParser();
-//        System.out.println("Please enter your query like this: ( A & ~B ) | ( C & D )");
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        try {
-//            String query = br.readLine().toLowerCase();
-//            map.print(et.evaluate_query(Parser.infix_to_Postfix(query),dict));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("Total execution time: " + (endTime - startTime)*0.001 +" seconds");
+        final long endTime = System.currentTimeMillis();
+        ExpressionParser et = new ExpressionParser();
+        System.out.println("Please enter your query like this: ( A & ~B ) | ( C & D )");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String query = br.readLine().toLowerCase();
+            map.print(et.evaluate_query(Parser.infix_to_Postfix(query),dict));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Total execution time: " + (endTime - startTime)*0.001 +" seconds");
     }
 
 }
