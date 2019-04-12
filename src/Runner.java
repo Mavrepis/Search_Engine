@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import static java.lang.Boolean.TRUE;
 
 
 public class Runner {
@@ -23,11 +22,15 @@ public class Runner {
         Parser p = new Parser();
         Dictionary dict = new Dictionary();
         MapDocId2Files map = new MapDocId2Files(0);
+        HashMap<Integer,Integer> doc_length = new HashMap<>();
+        HashMap<String,Float> df = new HashMap<>();
 
         File hash_map = new File("dictionary.ser");
         File map_docId = new File("map.ser");
+        File doc_lengths = new File("doc_lengths.ser");
+        File doc_frequencies = new File("doc_frequencies.ser");
 
-        if (hash_map.exists() && map_docId.exists() ) {
+        if (hash_map.exists() && map_docId.exists() && doc_lengths.exists() && doc_frequencies.exists()) {
             System.out.println("Loading dictionary!");
             try {
                 FileInputStream fis_hash = new FileInputStream("dictionary.ser");
@@ -35,11 +38,24 @@ public class Runner {
                 dict = (Dictionary) ois_hash.readObject();
                 ois_hash.close();
                 fis_hash.close();
+
                 FileInputStream fis_map = new FileInputStream("map.ser");
                 ObjectInputStream ois_map = new ObjectInputStream(fis_map);
                 map = (MapDocId2Files) ois_map.readObject();
                 fis_map.close();
                 ois_map.close();
+
+                FileInputStream fis_doc_length = new FileInputStream("doc_lengths.ser");
+                ObjectInputStream ois_doc_length = new ObjectInputStream(fis_doc_length);
+                doc_length = (HashMap<Integer, Integer>) ois_doc_length.readObject();
+                fis_doc_length.close();
+                ois_doc_length.close();
+
+                FileInputStream fis_doc_freq = new FileInputStream("doc_frequencies.ser");
+                ObjectInputStream ois_doc_freq = new ObjectInputStream(fis_doc_freq);
+                df = (HashMap<String, Float>) ois_doc_freq.readObject();
+                fis_doc_freq.close();
+                ois_doc_freq.close();
 
             }
             catch (IOException ioe) {
@@ -58,11 +74,14 @@ public class Runner {
                         .filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
                 System.out.println("Creating dictionary!");
                 map = new MapDocId2Files(result.size());
-                HashMap<String,Float> df = new HashMap<>();
+
 
                 for (String path : result) {
+
                     ArrayList words = p.parseFile(path);
+                    doc_length.put(result.indexOf(path),words.size());
                     map.add(result.indexOf(path),path);
+
                     HashMap<String,Integer> term_frequencies = new HashMap<>();
                     for (Object word : words) {
                         if(!term_frequencies.containsKey(word)){
@@ -109,13 +128,26 @@ public class Runner {
                 oos_map.writeObject(map);
                 oos_map.close();
                 fos_map.close();
+
+                FileOutputStream fos_doc_length = new FileOutputStream("doc_lengths.ser");
+                ObjectOutputStream oos_doc_length = new ObjectOutputStream(fos_doc_length);
+                oos_doc_length.writeObject(doc_length);
+                oos_doc_length.close();
+                fos_doc_length.close();
+
+                FileOutputStream fos_doc_freq = new FileOutputStream("doc_frequencies.ser");
+                ObjectOutputStream oos_doc_freq = new ObjectOutputStream(fos_doc_freq);
+                oos_doc_freq.writeObject(df);
+                oos_doc_freq.close();
+                fos_doc_freq.close();
+
                 System.out.println("Serialized HashMap and Map data is saved in dictionary.ser and map.ser");
 
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }
         }
-        dict.print();
+//        dict.print();
         //Get word's list of appearances.
 //        System.out.println(dict.get("response"));
 
@@ -141,16 +173,23 @@ public class Runner {
 //                Queries.or(Queries.intersect(list_first_word,list_second_word),Queries.intersect(list_second_word,list_third_word))
 //        );
 //        System.out.println(q.n_word_and(list_first_word,list_second_word,list_third_word,list_fourth_word));
+//        for(Map.Entry entry : doc_length.entrySet()){
+//            System.out.println(entry.getKey() + " " + entry.getValue());
+//        }
         final long endTime = System.currentTimeMillis();
-        ExpressionParser et = new ExpressionParser();
-        System.out.println("Please enter your query like this: ( A & ~B ) | ( C & D )");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String query = br.readLine().toLowerCase();
-            map.print(et.evaluate_query(Parser.infix_to_Postfix(query),dict));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        ExpressionParser ep = new ExpressionParser();
+//        System.out.println("Please enter your query like this: ( A & ~B ) | ( C & D )");
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        try {
+//            String query = br.readLine().toLowerCase();
+//            map.print(ep.evaluate_query(Parser.infix_to_Postfix(query),dict));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        ArrayList<String> check = new ArrayList<>();
+        check.add("world");
+        check.add("quota");
+        Queries.cosine_score(check,doc_length,dict,df);
         System.out.println("Total execution time: " + (endTime - startTime)*0.001 +" seconds");
     }
 
