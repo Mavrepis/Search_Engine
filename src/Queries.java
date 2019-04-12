@@ -1,3 +1,4 @@
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.*;
 
 class Queries {
@@ -74,5 +75,20 @@ class Queries {
         Set<Integer> answer = new HashSet<>(doc_ID);
         answer.removeAll(word);
         return new ArrayList<>(answer);
+    }
+    static void cosine_score(ArrayList<String> query, HashMap<Integer,Integer> Length,
+                                           Dictionary dict,HashMap<String,Float> df){
+        float [] Scores = new float[Length.size()];
+        for(String term : query){
+            float weight_term_query = (float) Math.log(8000/df.get(term));
+            ArrayList<Posting> term_postings = dict.get(term);
+            for(Posting post: term_postings){
+                Scores[post.getDocId()]+=weight_term_query * post.getScore();
+            }
+        }
+        for(int i=0; i<Scores.length; i++){
+            Scores[i] =Scores[i]/Length.get(i);
+        }
+
     }
 }
