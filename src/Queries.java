@@ -1,5 +1,6 @@
-import java.nio.charset.IllegalCharsetNameException;
 import java.util.*;
+import java.util.stream.IntStream;
+import static java.util.Comparator.comparingDouble;
 
 class Queries {
     private static Set<Integer> doc_ID = new HashSet<>();
@@ -76,8 +77,8 @@ class Queries {
         answer.removeAll(word);
         return new ArrayList<>(answer);
     }
-    static void cosine_score(ArrayList<String> query, HashMap<Integer,Integer> Length,
-                                           Dictionary dict,HashMap<String,Float> df){
+    static int[] cosine_score(ArrayList<String> query, HashMap<Integer,Integer> Length,
+                              Dictionary dict, HashMap<String,Float> df){
         float [] Scores = new float[Length.size()];
         for(String term : query){
             float weight_term_query = (float) Math.log(8000/df.get(term));
@@ -89,6 +90,15 @@ class Queries {
         for(int i=0; i<Scores.length; i++){
             Scores[i] =Scores[i]/Length.get(i);
         }
+        return TopN(Scores,5);
 
+    }
+    public static int[] TopN(final float[] input, final int n) {
+        return IntStream.range(0, input.length)
+                .boxed()
+                .sorted(comparingDouble(i ->input[(int) i]).reversed())
+                .mapToInt(i -> i)
+                .limit(n)
+                .toArray();
     }
 }
