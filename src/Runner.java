@@ -189,7 +189,7 @@ public class Runner {
         ArrayList<String> check = new ArrayList<>();
         check.add("world");
         check.add("quota");
-        Queries.cosine_score(check,doc_length,dict,df);
+        map.print(Queries.cosine_score(check,doc_length,dict,df));
         System.out.println("Total execution time: " + (endTime - startTime)*0.001 +" seconds");
     }
 
