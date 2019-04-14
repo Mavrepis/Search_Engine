@@ -28,4 +28,12 @@ public class MapDocId2Files implements Serializable {
         }
         else System.out.println("No results");
     }
+    void print(int[] docs){
+        if (docs.length!=0) {
+            for (int docId : docs) {
+                System.out.println(get(docId));
+            }
+        }
+        else System.out.println("No results");
+    }
 }
