@@ -176,7 +176,6 @@ public class Runner {
 //        for(Map.Entry entry : doc_length.entrySet()){
 //            System.out.println(entry.getKey() + " " + entry.getValue());
 //        }
-        final long endTime = System.currentTimeMillis();
 //        ExpressionParser ep = new ExpressionParser();
 //        System.out.println("Please enter your query like this: ( A & ~B ) | ( C & D )");
 //        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -186,10 +185,19 @@ public class Runner {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        ArrayList<String> check = new ArrayList<>();
-        check.add("world");
-        check.add("quota");
-        map.print(Queries.cosine_score(check,doc_length,dict,df));
+        System.out.println("Type your search terms: ");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String query = br.readLine().toLowerCase();
+            ArrayList<String> terms =Parser.tokenize(query);
+            final long q_timestart = System.currentTimeMillis();
+            map.print(Queries.cosine_score(terms,doc_length,dict,df));
+            final long q_timestop = System.currentTimeMillis();
+            System.out.println("Query time: " + (q_timestop - q_timestart)*0.001 +" seconds");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        final long endTime = System.currentTimeMillis();
         System.out.println("Total execution time: " + (endTime - startTime)*0.001 +" seconds");
     }
 
