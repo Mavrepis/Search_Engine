@@ -79,15 +79,21 @@ class Queries {
     }
     static int[] cosine_score(ArrayList<String> query, HashMap<Integer,Integer> Length,
                               Dictionary dict, HashMap<String,Float> df){
+        //Cumulative score array for each document
         float [] Scores = new float[Length.size()];
+
         for(String term : query){
+            //Calculate term's weight = ( log(N/df) )
             float weight_term_query = (float) Math.log(8000/df.get(term));
+            //Fetch term's inverted dictionary list
             ArrayList<Posting> term_postings = dict.get(term);
             for(Posting post: term_postings){
+                //Update scores
                 Scores[post.getDocId()]+=weight_term_query * post.getScore();
             }
         }
         for(int i=0; i<Scores.length; i++){
+            //Normalise scores array by dividing with document's length
             Scores[i] =Scores[i]/Length.get(i);
         }
         return TopN(Scores,5);
@@ -96,8 +102,11 @@ class Queries {
     public static int[] TopN(final float[] input, final int n) {
         return IntStream.range(0, input.length)
                 .boxed()
+                //Sort elements by descending score
                 .sorted(comparingDouble(i ->input[(int) i]).reversed())
+                // "Create" IntStream based on input's sorted indexes
                 .mapToInt(i -> i)
+                //Keep n elements of IntStream
                 .limit(n)
                 .toArray();
     }
