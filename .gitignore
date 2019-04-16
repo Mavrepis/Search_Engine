@@ -2,4 +2,6 @@
 data/
 dictionary.ser
 map.ser
+doc_frequencies.ser
+doc_lengths.ser
 Search_Engine.iml
