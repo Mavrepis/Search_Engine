@@ -22,7 +22,7 @@ public class Runner {
         Parser p = new Parser();
         Dictionary dict = new Dictionary();
         MapDocId2Files map = new MapDocId2Files(0);
-        HashMap<Integer,Integer> doc_length = new HashMap<>();
+        HashMap<Integer,Float> doc_length = new HashMap<>();
         HashMap<String,Float> df = new HashMap<>();
 
         File hash_map = new File("dictionary.ser");
@@ -47,7 +47,7 @@ public class Runner {
 
                 FileInputStream fis_doc_length = new FileInputStream("doc_lengths.ser");
                 ObjectInputStream ois_doc_length = new ObjectInputStream(fis_doc_length);
-                doc_length = (HashMap<Integer, Integer>) ois_doc_length.readObject();
+                doc_length = (HashMap<Integer, Float>) ois_doc_length.readObject();
                 fis_doc_length.close();
                 ois_doc_length.close();
 
@@ -75,11 +75,11 @@ public class Runner {
                 System.out.println("Creating dictionary!");
                 map = new MapDocId2Files(result.size());
 
+                HashMap<Integer,HashMap<String,Integer>> term_squared = new HashMap<>();
 
                 for (String path : result) {
 
                     ArrayList words = p.parseFile(path);
-                    doc_length.put(result.indexOf(path),words.size());
                     map.add(result.indexOf(path),path);
 
                     HashMap<String,Integer> term_frequencies = new HashMap<>();
@@ -97,12 +97,28 @@ public class Runner {
                             term_frequencies.put(word.toString(),term_frequencies.get(word)+1);
                         }
                     }
+                    term_squared.put(result.indexOf(path), term_frequencies);
+
                     for(Map.Entry<String, Integer> entry : term_frequencies.entrySet()) {
                         String word = entry.getKey();
                         float value = entry.getValue();
                         dict.insert(word,result.indexOf(path),value);
                     }
                 }
+
+                //TODO Check validity
+                for(Map.Entry<Integer,HashMap<String,Integer>> entry: term_squared.entrySet()){
+                    int docId = entry.getKey();
+                    HashMap<String,Integer> term_freq = entry.getValue();
+                    float sum =0;
+                    for(Map.Entry<String,Integer> iner_entry:term_freq.entrySet()){
+                        String word = iner_entry.getKey();
+                        Integer tf = iner_entry.getValue();
+                        sum+= Math.pow(tf,2)*Math.pow(Math.log(8000/df.get(word)),2);
+                    }
+                    doc_length.put(docId,(float)Math.pow(sum,0.5));
+                }
+
                 for(Map.Entry<String, Float> entry : df.entrySet()) {
                     ArrayList<Posting> entry_posting = dict.get(entry.getKey());
                     for(Posting posting :entry_posting){
