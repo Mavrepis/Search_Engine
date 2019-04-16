@@ -18,7 +18,7 @@ public class Runner {
 
     @SuppressWarnings("SuspiciousMethodCalls")
     public static void main(String[] args) {
-        final long startTime = System.currentTimeMillis();
+        final long startTime = System.nanoTime();
         Parser p = new Parser();
         Dictionary dict = new Dictionary();
         MapDocId2Files map = new MapDocId2Files(0);
@@ -68,7 +68,7 @@ public class Runner {
             }
 
         } else {
-            try (Stream<Path> walk = Files.walk(Paths.get("C:\\Users\\Philip\\Documents\\IntelliJProjects\\Search_Engine\\data"))) {
+            try (Stream<Path> walk = Files.walk(Paths.get("C:\\Users\\phili\\IntelliJProjects\\Search_Engine\\data"))) {
 
                 List<String> result = walk.map(Path::toString)
                         .filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
@@ -108,17 +108,21 @@ public class Runner {
 
                 //TODO Check validity
                 for(Map.Entry<Integer,HashMap<String,Integer>> entry: term_squared.entrySet()){
+
                     int docId = entry.getKey();
-                    HashMap<String,Integer> term_freq = entry.getValue();
+                    HashMap<String,Integer> document_terms_freq = entry.getValue();
+                    //Sum is initialised here (document scope)
                     float sum =0;
-                    for(Map.Entry<String,Integer> iner_entry:term_freq.entrySet()){
-                        String word = iner_entry.getKey();
-                        Integer tf = iner_entry.getValue();
-                        sum+= Math.pow(tf,2)*Math.pow(Math.log(8000/df.get(word)),2);
+                    for(Map.Entry<String,Integer> inner_hash_entry:document_terms_freq.entrySet()){
+                        String term = inner_hash_entry.getKey();
+                        Integer tf = inner_hash_entry.getValue();
+                        sum+= Math.pow(tf,2)*Math.pow(Math.log(8000/df.get(term)),2);
                     }
+                    //Add to document length HashMap
                     doc_length.put(docId,(float)Math.pow(sum,0.5));
                 }
 
+                //Block to update inverted index
                 for(Map.Entry<String, Float> entry : df.entrySet()) {
                     ArrayList<Posting> entry_posting = dict.get(entry.getKey());
                     for(Posting posting :entry_posting){
@@ -206,15 +210,15 @@ public class Runner {
         try {
             String query = br.readLine().toLowerCase();
             ArrayList<String> terms =Parser.tokenize(query);
-            final long q_timestart = System.currentTimeMillis();
+            final long q_timestart = System.nanoTime();
             map.print(Queries.cosine_score(terms,doc_length,dict,df));
-            final long q_timestop = System.currentTimeMillis();
-            System.out.println("Query time: " + (q_timestop - q_timestart)*0.001 +" seconds");
+            final long q_timestop = System.nanoTime();
+            System.out.println("Query time: " + (q_timestop - q_timestart) * 0.000000001+" seconds");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        final long endTime = System.currentTimeMillis();
-        System.out.println("Total execution time: " + (endTime - startTime)*0.001 +" seconds");
+        final long endTime = System.nanoTime();
+        System.out.println("Total execution time: " + (endTime - startTime)* 0.000000001+" seconds");
     }
 
 }
