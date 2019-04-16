@@ -77,19 +77,24 @@ class Queries {
         answer.removeAll(word);
         return new ArrayList<>(answer);
     }
-    static int[] cosine_score(ArrayList<String> query, HashMap<Integer,Integer> Length,
+    static int[] cosine_score(ArrayList<String> query, HashMap<Integer,Float> Length,
                               Dictionary dict, HashMap<String,Float> df){
         //Cumulative score array for each document
         float [] Scores = new float[Length.size()];
 
         for(String term : query){
             //Calculate term's weight = ( log(N/df) )
-            float weight_term_query = (float) Math.log(8000/df.get(term));
-            //Fetch term's inverted dictionary list
-            ArrayList<Posting> term_postings = dict.get(term);
-            for(Posting post: term_postings){
-                //Update scores
-                Scores[post.getDocId()]+=weight_term_query * post.getScore();
+            if(df.get(term) !=null) {
+                float weight_term_query = (float) Math.log(8000 / df.get(term));
+                //Fetch term's inverted dictionary list
+                ArrayList<Posting> term_postings = dict.get(term);
+                for (Posting post : term_postings) {
+                    //Update scores
+                    Scores[post.getDocId()] += weight_term_query * post.getScore();
+                }
+            }
+            else{
+                return null;
             }
         }
         for(int i=0; i<Scores.length; i++){
