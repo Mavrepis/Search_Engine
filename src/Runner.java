@@ -102,11 +102,12 @@ public class Runner {
                     for(Map.Entry<String, Integer> entry : term_frequencies.entrySet()) {
                         String word = entry.getKey();
                         float value = entry.getValue();
+                        // term_frequency = 1 + log(tf)
+                        value  = (float) ((float)1+ Math.log(value));
                         dict.insert(word,result.indexOf(path),value);
                     }
                 }
 
-                //TODO Check validity
                 for(Map.Entry<Integer,HashMap<String,Integer>> entry: term_squared.entrySet()){
 
                     int docId = entry.getKey();
@@ -116,7 +117,8 @@ public class Runner {
                     for(Map.Entry<String,Integer> inner_hash_entry:document_terms_freq.entrySet()){
                         String term = inner_hash_entry.getKey();
                         Integer tf = inner_hash_entry.getValue();
-                        sum+= Math.pow(tf,2)*Math.pow(Math.log(8000/df.get(term)),2);
+
+                        sum+= Math.pow((1+Math.log(tf)),2)*Math.pow(Math.log(8000/df.get(term)),2);
                     }
                     //Add to document length HashMap
                     doc_length.put(docId,(float)Math.pow(sum,0.5));
