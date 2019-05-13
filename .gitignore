@@ -1,5 +1,6 @@
 .idea/
 dictionary.ser
+output.html
 map.ser
 doc_frequencies.ser
 doc_lengths.ser
