@@ -1,5 +1,4 @@
 .idea/
-data/
 dictionary.ser
 map.ser
 doc_frequencies.ser
