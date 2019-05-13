@@ -68,7 +68,7 @@ public class Runner {
             }
 
         } else {
-            try (Stream<Path> walk = Files.walk(Paths.get("C:\\Users\\Philip\\Documents\\IntelliJProjects\\Search_Engine\\data"))) {
+            try (Stream<Path> walk = Files.walk(Paths.get("../data"))) {
 
                 List<String> result = walk.map(Path::toString)
                         .filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
@@ -106,7 +106,6 @@ public class Runner {
                     }
                 }
 
-                //TODO Check validity
                 for(Map.Entry<Integer,HashMap<String,Integer>> entry: term_squared.entrySet()){
                     int docId = entry.getKey();
                     HashMap<String,Integer> term_freq = entry.getValue();
