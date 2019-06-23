@@ -5,7 +5,6 @@ terms and retrieve their lists.
 import java.util.*;
 
 class Dictionary implements java.io.Serializable{
-;
     private HashMap<String, ArrayList<Posting>> dict;
     private static final long serialVersionUID = 0x1b32faab5902bfa3L;
 
