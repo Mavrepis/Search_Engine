@@ -1,3 +1,7 @@
+/*
+Class used to parse file and extract terms from it.
+Also provides method to transform a infix expression to Postfix
+ */
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

@@ -1,3 +1,7 @@
+/*
+Posting class to be used in Inverted index lists
+ */
+
 import java.io.Serializable;
 
 public class Posting implements Serializable {

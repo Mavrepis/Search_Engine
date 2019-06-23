@@ -1,3 +1,6 @@
+/*
+Class used to parse a logic expression and retrieve query's answer
+ */
 import java.util.ArrayList;
 import java.util.Stack;
 

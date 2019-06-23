@@ -1,3 +1,7 @@
+/*
+Inverted Index class (Dictionary), provides methods for inserting
+terms and retrieve their lists.
+ */
 import java.util.*;
 
 class Dictionary implements java.io.Serializable{
