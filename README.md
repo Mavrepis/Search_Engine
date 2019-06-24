@@ -45,12 +45,13 @@ and its' final two elements are combined in the way indicated by the last symbol
 Finally, the result containing the final document ids is used to find the paths of the corresponding files.
 
 ### Ranked search
-For the ranked search there is a need to define a new metric of relevance between the given query and
+In order to rank the result of a query there is a need to define a new metric of relevance between the given query and
 the documents in our collection which is the __Score__ value. In order to achieve this goal, we need to create a new Class
 called Posting which has the docID and its' corresponding score. Based on that, a new inverse index of this form 
-**_(Term->ArrayList<Posting>)_** is created.
+**_(Term->ArrayList\<Posting>)_** is created.
+
+In this project the (vector-space)[https://en.wikipedia.org/wiki/Vector_space_model] model is used to decribe both the queries and the documents. The similarity between a document and a query is expressed by the the angle formed by the two but in practise it's much is easier to calculate the cosine of their angle. As all the documents will be in the first quarter of the cartesian axes (there cannot be a negative term in a document) the cosine will be positive and monotonically increasing which allow the usage of the cosine for the calculation of query-document similarity.
 
 The scoring used in this project is [TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) scoring with normalization
-using the documents' length. Furthermore, a method for displaying only the Top N results is employed in order to avoid the
-sorting of multiple documents with zero score.
+using the documents' length. Furthermore, as all the documents will receive a score between [0,1] a method for displaying only the Top N results is employed in order to avoid the sorting of multiple documents with zero score.
 
