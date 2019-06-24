@@ -23,7 +23,9 @@ in order to process queries as such:
 
 __( A & B ) | ( C & D )__ where A, B, C, D are terms of the given collection.
 
-On the first run the program will iteratively search the given folder for text files and parse them one by one, extracting all their words. After this, the term frequencies and the document frequencies tables are created, updated and the terms are inserted to the inverted index. The Inverted index can be either a __HashMap<String,ArrayList<Integer\>>__ if we dont need the support for ranked queries or a  __HashMap<String,ArrayList<Posting\>>__ where the custom class Posting consists of docID and score fields. When all of the documents are processed and the document frequency table is complete, the score of each Posting in the Dictionary is multiplied by _log(N/df(t))_, formerly being the term frequency, forming the term-document final score.
+### First Run
+
+The program will iteratively search the given folder for text files and parse them one by one, extracting all their words through tokenization excluding common words, numbers, tabs, spaces and other special characters. After this, the term frequencies and the document frequencies tables are updated and the terms are inserted into the inverted index. The Inverted index can be either a __HashMap<String,ArrayList<Integer\>>__ if there is only the need to answer boolean questions and the support for ranked queries is not requiered or a  __HashMap<String,ArrayList<Posting\>>__ where the custom class Posting consists of docID and score fields. When all of the documents are processed and the document frequency table is complete, the score of each Posting in the Dictionary is multiplied by _log(N/df(t))_, formerly being the term frequency, forming the term-document final score.
 
 ### Existence queries
 
