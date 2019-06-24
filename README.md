@@ -23,9 +23,11 @@ in order to process queries as such:
 
 __( A & B ) | ( C & D )__ where A, B, C, D are terms of the given collection.
 
+On the first run the program will iteratively search the given folder for text files and parse them one by one, extracting all their words.
+
 ### Existence queries
 
-An existence query is really simple, as it can be answered with a simple lookup on the Dictionary structure which is a HashMap,
+An existence query is really simple, as it can be answered with a lookup on the Dictionary structure which is a HashMap,
 making it rather effective. The user can type the term of his/her choice and a list of all the files containing the selected
 term will be returned.
 
