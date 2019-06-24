@@ -52,7 +52,11 @@ the documents in our collection which is the __Score__ value. In order to achiev
 called Posting which has the docID and its' corresponding score. Based on that, a new inverse index of this form 
 **_(Term->ArrayList\<Posting>)_** is created.
 
-In this project the (vector-space)[https://en.wikipedia.org/wiki/Vector_space_model] model is used to decribe both the queries and the documents. The similarity between a document and a query is expressed by the the angle formed by the two but in practise it's much is easier to calculate the cosine of their angle. As all the documents will be in the first quarter of the cartesian axes (there cannot be a negative term in a document) the cosine will be positive and monotonically increasing which allow the usage of the cosine for the calculation of query-document similarity.
+In this project the (vector-space)[https://en.wikipedia.org/wiki/Vector_space_model] model is used to decribe both the queries and the documents. 
+The similarity between a document and a query is expressed by the the angle formed by the two but in practise it's much is easier to calculate the cosine of their angle. As all the documents will be in the first quarter of the cartesian axes (there cannot be a negative term in a document) the cosine will be positive and monotonically increasing which allow the usage of the cosine for the calculation of query-document similarity.
+#### Cosine Similiraty
+
+![equation](https://latex.codecogs.com/gif.latex?similarity%20%3D%5Ccos%28theta%29%3D%20%5Cfrac%7BDi%5Ccdot%20q%7D%7B%5Cleft%20%5C%7C%20Di%20%5Cright%20%5C%7C%5Ccdot%20%5Cleft%20%5C%7C%20q%20%5Cright%20%5C%7C%7D%3D%5Cfrac%7B%5Csum%20Diq%7D%7B%5Csqrt%28%5Csum%28Di%5E2%29%29%5Ccdot%5Csqrt%28%5Csum%28q%5E2%29%29%7D)
 
 The scoring used in this project is [TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) scoring with normalization
 using the documents' length. Furthermore, as all the documents will receive a score between [0,1] a method for displaying only the Top N results is employed in order to avoid the sorting of multiple documents with zero score.
