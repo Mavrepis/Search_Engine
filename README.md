@@ -16,14 +16,14 @@ The collection of texts used for demonstration purposes is included in the folde
 Reuters news collection.
 Furthermore, for the creation of the inverted index, document frequency  and document length structures, HashMap has been used
 as 
-it supports _insertion_ and _retrieval_ with __O(1)__ time and we do not care for range queries.
+it supports _insertion_ and _retrieval_ with __O(1)__ time. One other choice considered for this project was the usage of Binary trees as the structure for the inverted index, which would provide the capability of range queries _(ex. all terms wa-wo)_ increasing the cost of search and insertion at __O(logn)__. 
 
 In the scope of this project a custom boolean expression parser was implemented, which is included in the file _"Logic_Parser"_
 in order to process queries as such:
 
 __( A & B ) | ( C & D )__ where A, B, C, D are terms of the given collection.
 
-On the first run the program will iteratively search the given folder for text files and parse them one by one, extracting all their words.
+On the first run the program will iteratively search the given folder for text files and parse them one by one, extracting all their words. After this, the term frequencies and the document frequencies tables are created, updated and the terms are inserted to the inverted index. The Inverted index can be either a __HashMap<String,ArrayList<Integer\>>__ if we dont need the support for ranked queries or a  __HashMap<String,ArrayList<Posting\>>__ where the custom class Posting consists of docID and score fields. When all of the documents are processed and the document frequency table is complete, the score of each Posting in the Dictionary is multiplied by _log(N/df(t))_, formerly being the term frequency, forming the term-document final score.
 
 ### Existence queries
 
