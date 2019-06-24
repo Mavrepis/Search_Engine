@@ -14,8 +14,7 @@ This engine supports the following:
 
 The collection of texts used for demonstration purposes is included in the folder _"/data"_ and is a subset of much larger
 Reuters news collection.
-Furthermore, for the creation of the inverted index, document frequency  and document length structures, HashMap has been used
-as 
+Furthermore, for the creation of the inverted index, document frequency table (which is used to aggregate the appearance of a term in the collection), term frequency table (which is used to aggregate the appearnce of a term inside a document) and document length structures, HashMap has been used as 
 it supports _insertion_ and _retrieval_ with __O(1)__ time. One other choice considered for this project was the usage of Binary trees as the structure for the inverted index, which would provide the capability of range queries _(ex. all terms wa-wo)_ increasing the cost of search and insertion at __O(logn)__. 
 
 In the scope of this project a custom boolean expression parser was implemented, which is included in the file _"Logic_Parser"_
@@ -41,6 +40,9 @@ Firstly, the program transforms the query from it's infix form _(as shown above)
 
 Then, the query is processed and excecuted in the implied postfix order. The corresponding partial answers are stored to a Stack
 and its' final two elements are combined in the way indicated by the last symbol to lead to the final result of the query.
+
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bbmatrix%7D%20%5C%5C%20or%20%5C%5Cand%20%5C%5C%20not%20%5C%5C%20D%20%5C%5C%20C%20%5C%5C%20and%20%5C%5C%20A%20%5C%5C%20B%20%5Cend%7Bbmatrix%7D%20%5Cxrightarrow%7B%5Ctext%7BA%20and%20B%7D%7D%20%5Cbegin%7Bbmatrix%7D%20%5C%5C%20-%20%5C%5Cor%20%5C%5C%20and%20%5C%5C%20not%20%5C%5C%20D%20%5C%5C%20C%20%5C%5C%20r%20%5Cend%7Bbmatrix%7D%20%5Cxrightarrow%7B%5Ctext%7Bnot%20D%7D%7D%20%5Cbegin%7Bbmatrix%7D%20%5C%5C%20-%20%5C%5C%20or%20%5C%5C%20and%20%5C%5C%20not%20D%20%5C%5C%20C%20%5C%5C%20r%20%5Cend%7Bbmatrix%7D%20%5Cxrightarrow%7B%5Ctext%7BC%20and%20%28not%20D%29%7D%7D%20%5Cbegin%7Bbmatrix%7D%20%5C%5C%20-%20%5C%5C%20-%20%5C%5C%20-%20%5C%5C%20or%20%5C%5C%20r2%20%5C%5C%20r%20%5Cend%7Bbmatrix%7D%20%5Cxrightarrow%7B%5Ctext%7Br%20or%20r2%7D%7D%20%5Cbegin%7Bbmatrix%7D%20%5C%5C%20-%20%5C%5C%20-%20%5C%5C%20-%20%5C%5C%20-%20%5C%5C%20-%20%5C%5C%20r3%20%5Cend%7Bbmatrix%7D%20%5Cxrightarrow%7B%5Ctext%7BANSWER%7D%7D)
 
 Finally, the result containing the final document ids is used to find the paths of the corresponding files.
 
