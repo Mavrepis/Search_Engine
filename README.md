@@ -24,7 +24,7 @@ __( A & B ) | ( C & D )__ where A, B, C, D are terms of the given collection.
 
 ### Asumptions
 
-While a real-world engine would use a crawler to fetch new documents for insertion in the search engine's database and multiple techniques to optimally insert terms in the inverted index as lemmatization, stop-word removal, stemming and compression, I chose not to implement those for simplicity's sake. However, these techniques can be implemented in the near future to improve the efficiency and the fucntionality of this project.
+While a real-world engine would use a crawler to fetch new documents for insertion in the search engine's database and multiple techniques to optimally insert terms in the inverted index as lemmatization, stop-word removal, stemming and compression, I chose not to implement those for simplicity's sake. However, these techniques can be implemented in the near future to improve the efficiency and the fucntionality of this project. For example, stop-word removal could be as simple as adding to the delimiter list of the tokenization the stop-word list.
 
 This search engine supports reading only text files (.txt) from the given directory but there are multiple libraries in JAVA to add the functionality of reading text through PDF files. Even though that this search engine can support multiple languages due to it's simplicity, it has only been tested with English documents.
 
