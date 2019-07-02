@@ -22,6 +22,12 @@ in order to process queries as such:
 
 __( A & B ) | ( C & D )__ where A, B, C, D are terms of the given collection.
 
+### Asumptions
+
+While a real-world engine would use a crawler to fetch new documents for insertion in the search engine's database and multiple techniques to optimally insert terms in the inverted index as lemmatization, stop-word removal, stemming and compression, I chose not to implement those for simplicity's sake. However, these techniques can be implemented in the near future to improve the efficiency and the fucntionality of this project.
+
+This search engine supports reading only text files (.txt) from the given directory but there are multiple libraries in JAVA to add the functionality of reading text through PDF files. Even though that this search engine can support multiple languages due to it's simplicity, it has only been tested with English documents.
+
 ### First Run
 
 The program will iteratively search the given folder for text files and parse them one by one, extracting all their words through tokenization excluding common words, numbers, tabs, spaces and other special characters. After this, the term frequencies and the document frequencies tables are updated and the terms are inserted into the inverted index. The Inverted index can be either a __HashMap<String,ArrayList<Integer\>>__ if there is only the need to answer boolean questions and the support for ranked queries is not requiered or a  __HashMap<String,ArrayList<Posting\>>__ where the custom class Posting consists of docID and score fields. When all of the documents are processed and the document frequency table is complete, the score of each Posting in the Dictionary is multiplied by _log(N/df(t))_, formerly being the term frequency, forming the term-document final score.
