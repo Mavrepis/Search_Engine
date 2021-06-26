@@ -1,5 +1,5 @@
 # Search Engine
-Basic search engine university project. This was created in the context of "Information Retrieval" lesson.
+Basic search engine university project. This was created in the context of "Information Retrieval" course.
 
 Special _thank you_ to my professor **Christos Doulkeridis** who guided me through the process of creating this.
 
